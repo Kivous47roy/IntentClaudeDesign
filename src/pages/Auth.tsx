@@ -12,6 +12,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [confirmPending, setConfirmPending] = useState(false);
 
   useEffect(() => {
     if (!loading && user) navigate("/", { replace: true });
@@ -22,13 +23,16 @@ export default function Auth() {
     setSubmitting(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: `${window.location.origin}/` },
         });
         if (error) throw error;
-        toast.success("Welcome to Intent.");
+        // If no session, email confirmation is required
+        if (!data.session) {
+          setConfirmPending(true);
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -39,6 +43,34 @@ export default function Auth() {
       setSubmitting(false);
     }
   };
+
+  if (confirmPending) {
+    return (
+      <div className="paper-bg flex min-h-dvh flex-col items-center justify-center px-7">
+        <div className="mx-auto w-full max-w-sm">
+          <div className="mb-8 flex items-baseline gap-3">
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">INTENT</span>
+            <div className="h-px flex-1 bg-ink/10" />
+          </div>
+          <h1 className="font-display text-[36px] leading-[1.05]">
+            Check your <em className="font-serif not-italic font-normal italic">email</em>.
+          </h1>
+          <p className="mt-5 text-[14px] leading-[1.6] text-ink-2">
+            We sent a confirmation link to <span className="font-medium text-ink">{email}</span>.
+            Click it to activate your account, then come back and sign in.
+          </p>
+          <button
+            type="button"
+            onClick={() => { setConfirmPending(false); setMode("signin"); }}
+            className="mt-8 flex h-14 w-full items-center justify-between rounded bg-ink px-5 py-4 text-paper"
+          >
+            <span className="text-[15px] font-medium">Back to sign in</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="paper-bg flex min-h-dvh flex-col items-center justify-center px-7">
