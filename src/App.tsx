@@ -10,6 +10,7 @@ import Onboarding from "./pages/Onboarding";
 import Home from "./pages/Home";
 import JournalSession from "./pages/JournalSession";
 import History from "./pages/History";
+import Habits from "./pages/Habits";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -49,6 +50,16 @@ const App = () => (
                 <RequireAuth>
                   <AppShell hideNav>
                     <JournalSession />
+                  </AppShell>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/habits"
+              element={
+                <RequireAuth>
+                  <AppShell>
+                    <Habits />
                   </AppShell>
                 </RequireAuth>
               }

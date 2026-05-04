@@ -1,9 +1,10 @@
-import { Home as HomeIcon, BookOpen, User } from "lucide-react";
+import { Home as HomeIcon, BookOpen, CheckSquare, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/", label: "Today", icon: HomeIcon, end: true },
+  { to: "/habits", label: "Habits", icon: CheckSquare, end: false },
   { to: "/history", label: "History", icon: BookOpen, end: false },
   { to: "/profile", label: "Profile", icon: User, end: false },
 ];

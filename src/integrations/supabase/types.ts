@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      habit_logs: {
+        Row: {
+          created_at: string
+          habit_id: string
+          id: string
+          logged_date: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          habit_id: string
+          id?: string
+          logged_date: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          habit_id?: string
+          id?: string
+          logged_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      habits: {
+        Row: {
+          accent_var: string
+          created_at: string
+          emoji: string
+          id: string
+          position: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accent_var?: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          position?: number
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          accent_var?: string
+          created_at?: string
+          emoji?: string
+          id?: string
+          position?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       journal_entries: {
         Row: {
           completed: boolean
